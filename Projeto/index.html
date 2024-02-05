@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative Technology</title>
+
+    <link rel="stylesheet" href="./styles/reset.css">
+    <link rel="stylesheet" href="./styles/sidebar-footer.css">
+    <link rel="stylesheet" href="./styles/main-content.css">
+
+</head>
+<body>
+    <div class="sidebar">
+        <nav class="sidebar__navigation">
+            <div class="logo">
+                <a href="">
+                    <img src="./img/logosite-removebg-preview.png" alt="logo">
+                </a>
+            </div>
+            <ul>
+                <li>
+                    <a href="">
+                        <span><i class="fa fa-home"></i></span>
+                        <span>Início</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <span class="fa fa-search"></span>
+                        <span>Buscar curso</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="library">
+            <div class="library__content">
+                <button class="library__button">
+                    <span class="fa fas fa-book"></span>
+                    <span>Seus Cursos</span>
+                </button>
+                <span class="fa fa-plus"></span>
+            </div>
+
+            <section class="section-playlist">
+                <div class="section-playlist__content">
+                    <span class="text title">Crie sua grade curricular</span>
+                    <span class="text subtitle">É fácil, vamos te ajudar.</span>
+                    <button class="section-playlist__button">
+                        <span>Verificar</span>
+                    </button>
+                </div>
+            </section>
+
+            <section class="section-podcast">
+                <div class="section-podcast__content">
+                    <span class="text title">Que tal conhecer novos cursos?</span>
+                    <span class="text subtitle">Sempre uma nova oportunidade.</span>
+                    <button class="section-podcast__button">
+                        <span>Explorar cursos</span>
+                    </button>
+                </div>
+            </section>
+
+            <div class="cookies">
+                <a href="">Sobre</a>
+            </div>
+
+            <div class="languages">
+                <button class="languages__button">
+                    <span class="fa fa-globe"></span>
+                    <span>Conheça a Creative</span>
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <main>
+        <div class="main-container">
+            <nav class="header__navigation">
+                <div class="navigation">
+                    <button class="arrow-left">
+                        <img src="./img/small-left.png" alt="seta-esquerda">
+                    </button>
+                    <button class="arrow-right">
+                        <img src="./img/small-right.png" alt="seta-direita">
+                    </button>
+
+                    <div class="header__search">
+                        <img src="./img/search.png" alt="">
+                        <input id="search-input" maxlength="800" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Pesquisar cursos" value="" />
+                    </div>
+                    
+                </div>
+
+                <div class="header__login">
+                    <button class="subscribe">Matricule-se</button>
+                    <button class="login">Acessar</button>
+                </div>
+            </nav>
+
+            <!-- CURSOS  -->
+            
+            <div class="cursos-container">
+                <div id="result-cursos">
+                    <div class="cursos">
+                        <h1 id="greeting"></h1>
+                        <h2 class="session">Uma ampla opção de cursos</h2>
+                    </div>
+
+                    <div class="offer__scrool-container">
+                        <div class="offer__list">
+                            <section class="offer__list-item">
+
+                                <!-- CARD CURSO 1 -->
+                                <a href="" class="cards">
+                                    <div class="cards card1">
+                                        <img src="./img/html.png" alt="">
+                                        <span>HTML Avançado</span>
+                                        <p>HTML é uma linguagem amigável, que possui bastante suporte e é principalmente usada para páginas estáticas.</p>
+                                    </div>
+                                </a>
+
+                                <!-- CARD CURSO 2 -->
+                                <a href="" class="cards">
+                                    <div class="cards card1">
+                                        <img src="./img/java.png" alt="">
+                                        <span>Java</span>
+                                        <p>Java é uma linguagem multiplataforma, orientada a objetos e centrada em rede.</p>
+                                    </div>
+                                </a>
+
+                            </section>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+
+
+        </div>
+    </main>
+
+    <footer class="disclaimer-premium">
+        <div class="text">
+            <p class="disclaimer-premium__title">ASSISTIR AULA EXPERIMENTAL</p>
+            <p class="disclaimer-premium__subtitle">
+                Inscreva-se para acessar até três aulas de forma experimental. Não realizar matrícula
+            </p>
+        </div>
+        <div class="button">
+            <button type="button">Assistir aula experimental</button>
+        </div>
+    </footer>
+
+</body>
+</html>

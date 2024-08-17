@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATV Array</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            font-family: "Gill Sans", sans-serif;
+            box-sizing: border-box;
+        }
+
+        body{
+            background-color: rgb(243, 190, 229);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container{
+            background-color: white;
+            padding: 25px;
+            width: 750px;
+            border-radius: 10px;
+        }
+
+        .header{
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-left: 5px;
+            justify-content: center;
+        }
+
+        .riscado{
+            text-decoration: line-through;
+            color: green;
+        }
+
+        .input-body{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #edeef0;
+            border-radius: 0px;
+            padding-left: 15px;
+            margin-bottom: 25px;
+        }
+
+        .input-body input {
+            flex: 1;
+            border: none;
+            outline: none;
+            background: transparent;
+            padding: 10px 0;
+            font-size: 20px;
+        }
+
+        #btn_adicionar {
+            margin-left: 10px;
+            border-radius: 40px;
+            padding: 15px;
+            border: none;
+            background-color: limegreen;
+            color: rgb(2, 2, 2);
+            cursor: pointer;
+            transition: background-color 0.5s ease;
+        }
+
+        #btn_adicionar:hover{
+            background-color: #087c0e;
+        }
+
+        .tarefa {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            list-style: none;
+            font-size: 18px;
+            padding: 10px;
+            background: #edeef0;
+            border-radius: 5px;
+    
+        }
+
+        .tarefa input[type='checkbox']{
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .tarefa span{
+            flex-grow: 1;
+            margin-right: 10px;
+        }
+
+        .tarefa button {
+            margin-left: 10px;
+            border-radius: 40px;
+            padding: 8px;
+            border: none;
+            background-color: red;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.5s ease;
+        }
+
+        .tarefa button:hover {
+            background-color: #bb0101;
+        }
+
+        
+    </style>
+</head>
+<body>
+    <!-- Você foi convidado(a) a desenvolver um aplicativo web para ajudar
+    a gerenciar as tarefas domésticas de uma família agitada. O objetivo é
+    criar um "Gerenciador de Tarefas Domésticas" que permita que todos os 
+    membros da família adicionem, removam e atualizem suas tarefas diárias,
+    garantindo que tudo seja feito de forma organizada. -->
+    <div class="container">
+        
+        <div class="header">
+            <h1>Gerenciador de Tarefas</h1>
+        </div>
+        
+        <div class="input-body">
+            <input type="text" id="item" placeholder="Insira uma tarefa" onfocus="this.value">
+            <input type="text" id="nome" placeholder="Quem está adicionando">
+            <button id="btn_adicionar" onclick="adicionar()"> Adicionar </button>
+        </div>
+
+        <div class="exibir">
+            <ul id="ul">
+
+            </ul>
+        </div>
+
+    </div>
+    
+
+
+
+    <script>
+        let lista = []
+
+        // adicionar itens
+        function adicionar(){
+            var coleta = document.getElementById('item').value
+            var nome = document.getElementById('nome').value
+            if (coleta && nome) {
+                lista.push({tarefa: coleta, responsavel:nome})
+                atualizar()
+                document.getElementById('item').value = ''
+                document.getElementById('nome').value = ''
+            }
+        }
+
+        // atualizar lista
+        function atualizar(){
+            var ul = document.getElementById('ul')
+            ul.innerHTML = ''
+
+            for (let index = 0; index < lista.length; index++){
+                var item = lista[index]
+                var li = document.createElement('li')
+                li.className = 'tarefa'
+
+                // Adicionar o input de checkbox
+                var checkbox = document.createElement('input')
+                checkbox.type = 'checkbox'
+
+                // estilizar o check
+                checkbox.dataset.index = index
+                checkbox.onchange = function() {
+                    var dataIndex = this.dataset.index
+                    var liItem = ul.children[dataIndex]
+                    if (this.checked){
+                        liItem.classList.add('riscado')
+                    }else{
+                        liItem.classList.remove('riscado')
+                    }
+                }
+
+                li.appendChild(checkbox)
+
+                var item_digitado = document.createElement('span')
+                item_digitado.innerHTML = `${item.tarefa} (Responsável: ${item.responsavel})`
+                li.appendChild(item_digitado)
+
+                // Adicionar botão de excluir
+                var btn_excluir = document.createElement('button')
+                btn_excluir.textContent = 'Excluir'
+                btn_excluir.onclick = () => {
+                    excluir(index)
+                }
+                li.appendChild(btn_excluir)
+
+                //Adicionar itens do li no ul
+                ul.appendChild(li)
+
+            }
+        }
+
+        function excluir(index){
+            lista.splice(index, 1)
+            atualizar()
+        }
+        
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        header{
+            background-color: #b40606;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1{
+            margin: 0;
+        }
+
+        .container{
+            padding: 20px;
+            margin-bottom: 80px;
+
+        }
+
+        .menu_suspenso{
+            position: relative;
+            display: inline-block;
+            margin: 20px;
+            z-index: 1;
+        }
+
+        .menu_suspenso_btn{
+            background-color: #b40606;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        
+        }
+
+        .menu_suspenso-content{
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgb(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .menu_suspenso_item_btn{
+            background-color: #f9f9f9;
+            border: none;
+            padding: 12px 16px;
+            text-align: left;
+            width: 100%;
+            font-size: 16px;
+            cursor: pointer;
+            border-bottom: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+
+        .menu_suspenso_item_btn:hover{
+            background-color: #f1f1f1;
+        }
+
+        .menu_suspenso:hover .menu_suspenso-content {
+            display: block;
+        }
+
+        .menu_suspenso:hover .menu_suspenso_btn{
+            background-color: #6b0000;
+        }
+        .menu_suspenso_select{
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: white;
+            cursor: pointer;
+            appearance: none;
+        }
+
+        .menu_suspenso_select:focus{
+            outline: none;
+            border-color: #6b0000;
+        }
+
+
+        .transacao{
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 300px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+
+        .transacao input {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .transacao-btn{
+            background-color: #b40606;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+
+        }
+
+        .transacao-btn:hover{
+            background-color: #6b0000;
+        }
+
+        .resultado {
+            margin: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .extrato{
+            margin: 20px;
+            font-size: 16px;
+            color: #333;
+            white-space: pre-line;
+        }
+
+    </style>
+</head>
+<body>
+    <!--
+    Você trabalha em um banco e foi solicitado a desenvolver uma parte
+    da interface de um caixa eletrônico para o site do banco. Crie um
+    código HTML e JavaScript que simule a tela de operações do caixa eletrônico.
+
+    Na tela, deve haver um título 'Simulador de Caixa Eletrônico', um menu 
+    suspenso com opções para 'Consultar Saldo', 'Sacar' e 'Depositar', 
+    
+    um campo de entrada onde o cliente possa inserir o valor da transação 
+    e um botão 'Realizar'. 
+    
+    O resultado da operação deve ser exibido em um parágrafo.
+
+    Use JavaScript para implementar as ações selecionadas. 
+    Defina um saldo inicial fictício de R$ 1000. 
+    Certifique-se de que o código trate erros, 
+    como valores inválidos e saldos insuficientes.
+    -->
+    <header>
+        <h1>Simulador de Caixa Eletrônico</h1>
+    </header>
+
+    <div class="container">
+        <div class="menu_suspenso">
+            <select id="operacao" class="menu_suspenso_select">
+                <option value="">Escolha uma operação</option>
+                <option value="consultar">Consultar Saldo</option>
+                <option value="sacar">Sacar</option>
+                <option value="depositar">Depositar</option>
+            </select>
+            
+            <!-- <button class="menu_suspenso_btn">Menu</button>
+            <div class="menu_suspenso-content">
+                
+                <button class="menu_suspenso_item_btn">Consultar Saldo</button>
+                <button class="menu_suspenso_item_btn">Sacar</button>
+                <button class="menu_suspenso_item_btn">Depositar</button>
+            </div>
+            -->
+        </div>
+    </div>
+    
+
+    <div class="transacao">
+        <label for="valor">Valor</label>
+        <input type="number" id="valor" placeholder= "Digite o valor" min="1" step="0.01">
+        <button class="transacao-btn" onclick="realizar_transacao()">Realizar</button>
+    </div>
+
+    <p id="resultado" class="resultado"></p>
+    <p id="extrato" class="extrato"></p>
+    
+    <script>
+        let saldo = 1000
+        let extrato = []
+
+        function realizar_transacao() {
+            try{
+                let operacao = document.getElementById('operacao').value
+                let valor = parseFloat(document.getElementById('valor').value)
+                let resultado = document.getElementById('resultado')
+
+                let extratoElement = document.getElementById('extrato')
+
+                if (operacao === 'consultar'){
+                    resultado.textContent = `Saldo atual: R$ ${saldo.toFixed(2)}`
+                    extratoElement.innerHTML = extrato.length > 0
+                        ? `Extrato de Transação: \n${extrato.join('\n')}`
+                        : 'Nenhuma transação registrada'
+                    
+                }
+
+                if (isNaN(valor) || valor <= 0) {
+                    throw new Error('Por favor, insira um valor válido.');
+                }
+
+                switch (operacao){
+
+                    case 'sacar':
+                        if (valor > saldo) {
+                            throw new Error('Saldo insuficiente')
+                        } else {
+                            saldo -= valor
+                            extrato.push(`Saque de R$ ${valor.toFixed(2)}`)
+                            resultado.textContent = `Saque realizado com sucesso! Saldo: R$ ${saldo.toFixed(2)}`
+                            
+                        }
+                        break
+
+                    case 'depositar':
+                        saldo += valor
+                        extrato.push(`Depósito de R$ ${valor.toFixed(2)}`)
+                        resultado.textContent = `Deposito realizado com sucesso! Saldo: R$ ${saldo.toFixed(2)}`
+                        break
+
+                    default:
+                        throw new Error('Entrada inválida. Selecione uma opção')
+                }
+                extratoElement.innerHTML = `Extrato de Transação:\n${extrato.join('\n')}`
+            } catch (error) {
+                extratoElement.innerHTML = `Extrato de Transação:\n${extrato.join('\n')}`
+            }
+
+        }
+
+        document.getElementById('operacao').addEventListener('change', function() {
+            if (this.value === 'consultar') {
+                realizar_transacao();
+            }
+        });
+
+    </script>
+
+
+</body>
+</html>

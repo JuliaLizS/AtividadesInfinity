@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 
+    Crie no seu HTML dois inputs do tipo "number" e um botão.
+    Quando clicado, o botão irá chamar uma função que calcula o IMC
+    (Índice de Massa Corporal) e exibe o resultado na tela.
+    Defina uma função que recebe os valores dos inputs (peso e altura),
+    calcula o IMC e exibe o resultado na tela.
+
+    A fórmula do IMC é:
+    IMC = peso / (altura * altura)
+     -->
+    
+    <input type="number" id="peso" placeholder="Digite seu peso">
+    <input type="number" id="altura" placeholder="Digite sua altura">
+    <button onclick="calcularIMC()" >Calcular IMC</button>
+
+    <p id="resultado"></p>
+
+    <script>
+        function calcularIMC(){
+            var peso = parseFloat(document.getElementById("peso").value)
+            var altura = parseFloat(document.getElementById("altura").value)
+            var imc = peso / (altura * altura)
+
+            document.getElementById("resultado").innerText = "O valor IMC é " + imc
+        }
+    </script>
+
+
+</body>
+</html>

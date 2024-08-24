@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casa do Chef</title>
+    <style>
+        :root {
+            --cor-principal: #b40606; 
+            --cor-secundaria: #f2a365;
+            --cor-fundo: #f8f8f8;
+            --cor-texto: #333;
+            --cor-botao-hover: #6b0000;
+        }
+
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: var(--cor-fundo);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        header{
+            background-color: var(--cor-principal);
+            color: white;
+            padding: 20px;
+            width: 100%;
+            text-align: center;
+            box-sizing: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            margin-bottom: 20px;
+            z-index: 1000;
+        }
+
+        .calculadora {
+            background-color: var(--cor-principal);
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            margin-top: 200px;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        
+
+        input[type='number'], select{
+            width: 280px;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            margin-bottom: 15px;
+        }
+
+        button {
+            background-color: var(--cor-secundaria);
+            color: rgb(19, 2, 2);
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: rgb(242, 160, 61);
+        }
+
+        p{
+            font-size: 16px;
+            color: var(--cor-texto);
+        }
+
+        
+
+    </style>
+
+</head>
+<body>
+    <!--
+    Imagine que você está criando uma solução digital para restaurantes, 
+    incluindo uma calculadora de gorjetas de fácil uso. 
+    O objetivo é desenvolver uma página da web onde os clientes possam inserir o valor total da conta e escolher a qualidade do serviço: "Bom", "Regular" ou "Ruim".
+    
+    Para isso, serão utilizadas arrow functions e funções de callback.
+    -->
+    <header>
+        <h1>Casa do Chef</h1>
+    </header>
+    
+    <div class="calculadora">
+
+        <h2>Calculadora de gorjeta</h2>
+
+        <label for="valor_total">Valor total da conta</label>
+        <input type="number" id="valor_total" placeholder="Digite o valor total da conta" min="1" step="0.01">
+        <label for="gorjeta">Porcentagem da gorjeta</label>
+        <select id="gorjeta">
+            <option value="5">5%</option>
+            <option value="10">10%</option>
+            <option value="15">15%</option>
+            <option value="20">20%</option>
+        </select>
+
+        <button onclick="calcularGorjeta()">Calcular Gorjeta</button>
+    </div>
+
+    <p id="valor_gorjeta"></p>
+    <p id="valor_final"></p>
+
+    <script>
+        /*
+        Arrow Function
+        const somaArrow = (a,b) => a + b
+
+        Callback
+        */
+
+        let calcularGorjeta = () => {
+            let valor = parseFloat(document.getElementById('valor_total').value)
+            let porcentagem_gorjeta = parseFloat(document.getElementById('gorjeta').value)
+
+            if(isNaN(valor) || valor <= 0){
+                document.getElementById('valor_gorgeta').textContent = 'Insira um valor inválido'
+                document.getElementById('valor_final').textContent = ""
+                return
+            }
+            
+            let calcular = (valor, porcentagem, callback) => callback(valor * (porcentagem / 100))
+
+            calcular(valor, porcentagem_gorjeta, gorjeta => {
+                let total = valor + gorjeta;
+                document.getElementById('valor_gorjeta').textContent = `Gorjeta: R$${gorjeta.toFixed(2)}`;
+                document.getElementById('valor_final').textContent = `Valor Final: R$${total.toFixed(2)}`;
+            })
+
+        }
+
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Interativo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f8ff;
+            text-align: center;
+        }
+        h1 {
+            color: #4a90e2;
+        }
+        h2 {
+            color: #333;
+        }
+        .options-container div {
+            margin: 10px 0;
+        }
+        button {
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .correct {
+            background-color: #28a745;
+        }
+        .incorrect {
+            background-color: #dc3545;
+        }
+        #statusAnswer {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            min-height: 40px; /* Ensures there's space for the message */
+        }
+        #reload {
+            margin-top: 20px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #17a2b8;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            display: none;
+            transition: background-color 0.3s;
+        }
+        #reload:hover {
+            background-color: #138496;
+        }
+    </style>
+</head>
+<body>
+    <h1>Quiz Interativo</h1>
+
+    <h2 id="question"></h2>
+
+    <div id="optionsContainer" class="options-container">
+        <div>1 - <button type="button" class="alternative" id="options0" value="0"></button></div>
+        <div>2 - <button type="button" class="alternative" id="options1" value="1"></button></div>
+        <div>3 - <button type="button" class="alternative" id="options2" value="2"></button></div>
+        <div>4 - <button type="button" class="alternative" id="options3" value="3"></button></div>
+    </div>
+
+    <div id="statusAnswer"></div>
+    
+    <button type="button" id="reload">Próxima Pergunta</button>
+
+    <script>
+        const questions = [
+            'Quem foi que gritou "independencia ou morte"?',
+            "Qual é a capital da França?",
+            "Qual é o maior planeta do nosso sistema solar?",
+            "Qual é a atual capital do Brasil?"
+        ];
+        const options = [
+            ["Dom Pedro II", "Tiririca", "Dom Pedro I", "Zacarias"],
+            ["Londres", "Paris", "Berlim", "Madrid"],
+            ["Vênus", "Marte", "Júpiter", "Saturno"],
+            ["Salvador", "Rio de Janeiro", "São Paulo", "Brasília"]
+        ];
+        const correctAnswers = [2, 1, 2, 3];
+        
+        let reloadButton = document.getElementById('reload');
+        let nowQuestion;
+
+        function generateQuestion() {
+            nowQuestion = Math.floor(Math.random() * questions.length);
+            document.getElementById("question").innerHTML = questions[nowQuestion];
+            
+            const optionsContainer = document.querySelectorAll('.alternative');
+            optionsContainer.forEach((element, index) => {
+                element.textContent = options[nowQuestion][index];
+                element.classList.remove('correct', 'incorrect'); // Remove previous styles
+            });
+
+            // Reset status answer and hide reload button
+            document.getElementById("statusAnswer").innerHTML = "";
+            reloadButton.style.display = "none";
+        }
+        
+        function selectButton() {
+            const alternatives = document.querySelectorAll('.alternative');
+        
+            alternatives.forEach(button => {
+                button.addEventListener('click', () => {
+                    const answer = button.value;
+                    checkAnswer(answer);
+                });
+            });
+        }
+
+        function checkAnswer(answer) {
+            answer = parseInt(answer);
+            let statusAnswer = document.getElementById("statusAnswer");
+            const buttons = document.querySelectorAll('.alternative');
+            
+            if (answer === correctAnswers[nowQuestion]) {
+                statusAnswer.innerHTML = "Acertou!!!";
+                statusAnswer.className = "feedback-message correct";
+            } else {
+                statusAnswer.innerHTML = `Errou! Resposta correta: ${options[nowQuestion][correctAnswers[nowQuestion]]}`;
+                statusAnswer.className = "feedback-message incorrect";
+            }
+
+            // Update button styles
+            buttons.forEach((button, index) => {
+                if (index === correctAnswers[nowQuestion]) {
+                    button.classList.add('correct');
+                } else if (index === answer) {
+                    button.classList.add('incorrect');
+                }
+            });
+
+            reloadButton.style.display = "block";
+        }
+
+        reloadButton.addEventListener('click', () => {
+            generateQuestion();
+        });
+
+        // Initial setup
+        generateQuestion();
+        selectButton();
+    </script>
+</body>
+</html>

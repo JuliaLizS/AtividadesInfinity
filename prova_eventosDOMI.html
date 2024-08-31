@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+        }
+        
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            font-weight: bold;
+        }
+        
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        button:hover {
+            background-color: #367c39;
+        }
+        
+        #resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+    </style>
+</head>
+<body>
+    <!--
+    Você está planejando uma viagem para os Estados Unidos e precisa converter
+    algumas distâncias do sistema métrico (metros) para o sistema imperial 
+    jardas, pés, polegadas, milhas). Para facilitar sua tarefa, você decidiu 
+    criar um conversor de unidades de comprimento.
+    
+    Instruções:
+    Selecione a unidade de medida de destino no segundo menu suspenso. 
+    Você pode escolher entre "Jarda", "Pé", "Polegada" ou "Milha".
+    Clique no botão "Converter" para ver o resultado da conversão.
+
+    Dicas de Valores:
+
+    Um metro é aproximadamente igual a 1.094 jardas, 3.281 pés, 39.37 polegadas ou 0.000621 milhas.
+    -->
+
+    <h1>Conversor de distâncias</h1>
+
+    <label for="metro">Informe a metragem:</label>
+    <input type="number" id="metro" placeholder="Insira aqui">
+
+    <label for="unidadeMedida">Escolha a unidade de medida</label>
+    <select name="unidadeMedida" id="unidadeMedida">
+        <option value="jardas">jardas</option>
+        <option value="pés">pés</option>
+        <option value="polegadas">polegadas</option>
+        <option value="milhas">milhas</option>
+    </select>
+
+    <button onclick="converter()">Converter</button>
+
+    <p id="resultado"></p>
+
+    <script>
+        function converter() {
+            let metro = parseFloat(document.getElementById('metro').value)
+            let unidadeMedida = document.getElementById('unidadeMedida').value
+            let resultado = 0
+
+            if (unidadeMedida === 'jardas') {
+                resultado = metro * 1.094
+            }
+            else if (unidadeMedida === 'pe'){
+                resultado = metro * 3.281
+            }
+            else if (unidadeMedida === 'polegada'){
+                resultado = metro * 39.37
+            }
+            else if (unidadeMedida === 'milha') {
+                resultado = metro * 0.000621
+            }
+            document.getElementById('resultado').innerHTML = `Resultado: ${resultado.toFixed(4)} ${unidadeMedida}`
+        }
+    </script>
+
+
+
+</body>
+</html>

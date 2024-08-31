@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            font-family: "Gill Sans", sans-serif;
+            box-sizing: border-box;
+        }
+
+        body{
+            background: #2f85be;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container{
+            background-color: white;
+            padding: 25px;
+            width: 90%;
+            max-width: 550px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header{
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-left: 5px;
+            justify-content: center;
+        }
+
+        .riscado {
+            text-decoration: line-through;
+            color: green
+        }
+
+        .input-body{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #edeef0;
+            border-radius: 30px;
+            padding-left: 20px;
+            margin-bottom: 25px;
+        }
+
+        .input-body input {
+            flex: 1;
+            border: none;
+            outline: none;
+            background: transparent;
+            padding: 10px 0;
+            font-size: 20px;
+        }
+
+
+
+        #btn_adicionar {
+            margin-left: 10px;
+            border-radius: 40px;
+            padding: 15px;
+            border: none;
+            background-color: limegreen;
+            color: rgb(2, 2, 2);
+            cursor: pointer;
+            transition: background-color 0.5s ease;
+        }
+
+        #btn_adicionar:hover {
+            background-color: #087c0e;
+        }
+
+        .tarefa {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            list-style: none;
+            font-size: 18px;
+            padding: 10px;
+            background: #edeef0;
+            border-radius: 5px;
+        }
+
+        .tarefa input[type='checkbox'] {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .tarefa span {
+            flex-grow: 1;
+            margin-right: 10px;
+        }
+
+        .tarefa button {
+            margin-left: 10px;
+            border-radius: 40px;
+            padding: 8px;
+            border: none;
+            background-color: red;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.5s ease;
+        }
+
+        .tarefa button:hover {
+            background-color: #bb0101;
+        }
+
+    </style>
+</head>
+<body>
+    <!--
+    Você foi contratado para desenvolver um aplicativo de anotações simples 
+    que permita aos usuários 
+    !adicionar notas de texto e 
+    !excluí-las conforme necessário.
+    O objetivo é criar uma interface de usuário amigável que 
+    funcione no navegador.
+
+    Requisitos Técnicos
+
+    1- Utilize HTML e JavaScript para criar a interface e a funcionalidade do aplicativo.
+    2- Ao clicar no 
+    ?botão "Adicionar Nota",
+    a nota digitada no campo de entrada de texto deve 
+    ?ser exibida na lista de notas abaixo do campo de entrada.
+    3- Cada nota deve ser acompanhada de um botão "Excluir" que, quando clicado, removerá a nota da lista.
+    4- O aplicativo deve ser responsivo, adaptando-se à largura da janela do navegador.
+    5- Sinta-se à vontade para personalizar a aparência e o estilo do aplicativo conforme desejar.
+    -->
+
+    <div class="container">
+        
+        <div class="header">
+            <h1>Notas</h1>
+        </div>
+
+
+        <div class="input-body"> 
+            <input type="text" id="item" placeholder="Insira uma tarefa" onfocus="this.value">
+            <button id="btn_adicionar" onclick="adicionar()">Adicionar Nota</button>
+        </div>
+
+
+        <div class="exibir">
+            <ul id="ul">
+            </ul>
+        </div>
+    </div>
+
+
+    <script>
+
+        let lista = []
+
+        // Função para adicionar item
+        function adicionar(){
+            
+            var coleta = document.getElementById('item').value
+            if (coleta) {
+                lista.push(coleta)
+                atualizar()
+                document.getElementById('item').value = ''
+            }
+            /*
+            */
+        }
+
+        // Função pra atualizar a lista
+        function atualizar() {
+            var ul = document.getElementById('ul')
+            ul.innerHTML = ''
+
+            for (let index = 0; index < lista.length; index++) {
+                
+                var item = lista[index]
+                var li = document.createElement('li')
+                li.className = 'tarefa'
+
+                // Adicionar o input de checkbox
+                var checkbox = document.createElement('input')
+                checkbox.type = 'checkbox'
+                // estilizar o check
+                checkbox.dataset.index = index
+                checkbox.onchange = function() {
+                    var dataIndex = this.dataset.index
+                    var liItem = ul.children[dataIndex]
+                    if (this.checked){
+                        liItem.classList.add('riscado')
+                    }else{
+                        liItem.classList.remove('riscado')
+                    }
+                }
+
+                li.appendChild(checkbox)
+
+                // Atualizar item adicionado na lista
+                var item_digitado = document.createElement('span')
+                item_digitado.innerHTML = item
+                li.appendChild(item_digitado)
+
+                // Adicionar botão de excluir
+                var btn_excluir = document.createElement('button')
+                btn_excluir.textContent = 'Excluir'
+                btn_excluir.onclick = () => {
+                    excluir(index)
+                }
+                li.appendChild(btn_excluir)
+
+                //Adicionar itens do li no ul
+                ul.appendChild(li)
+            }
+        }
+
+
+
+        function excluir(index) {
+            lista.splice(index, 1)
+            atualizar()
+        }
+
+        
+
+    </script>
+
+
+
+</body>
+</html>
